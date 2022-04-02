@@ -1,13 +1,16 @@
 import React from 'react';
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { dpToPixel } from '../utils/CalculateSize';
 import { getImage } from '../utils/GetImage';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { markAsFavorite as markAsFavoriteMiddleware } from '../redux/middlewares/posts/postsMiddleware';
 
-export default function DetailScreen({ route }) {
+export default function DetailScreen({ navigation }) {
+
+    const dispatch = useDispatch();
 
     const { postDetail } = useSelector(state => state);
-
 
     const { postData, userData, comments, } = postDetail;
 
@@ -20,6 +23,11 @@ export default function DetailScreen({ route }) {
             default:
                 return userData[key].toString()
         }
+    }
+
+    const markAsFavorite = () => {
+        dispatch(markAsFavoriteMiddleware(postData.id))
+        navigation.navigate('Favoritos');
     }
 
     return (
@@ -44,8 +52,8 @@ export default function DetailScreen({ route }) {
                                 Object.keys(userData).map((key, index) => {
                                     return (
                                         <View key={key + index} style={styles.dataContainer}>
-                                            <Text numberOfLines={1} key={index} style={styles.subTitle}>{key}</Text>
-                                            <Text numberOfLines={1} key={index} style={styles.description} >{getUserData(key)}</Text>
+                                            <Text numberOfLines={1} style={styles.subTitle}>{key}</Text>
+                                            <Text numberOfLines={1} style={styles.description} >{getUserData(key)}</Text>
                                         </View>
                                     )
                                 })
@@ -65,10 +73,21 @@ export default function DetailScreen({ route }) {
                             })
                         }
                     </View>
-
+                    <TouchableOpacity
+                        style={[styles.postContainer, {
+                            flexDirection: 'row',
+                            justifyContent: 'space-evenly',
+                            alignItems: 'center',
+                            backgroundColor: '#FA6666'
+                        }]}
+                        onPress={markAsFavorite}
+                    >
+                        < Text style={[styles.title, { marginBottom: 0, color: '#fff' }]}>Añadir a favoritos</Text>
+                        <Ionicons name="heart-outline" size={dpToPixel(20)} color="#fff" />
+                    </TouchableOpacity>
                 </View>
-            </ScrollView>
-        </SafeAreaView>
+            </ScrollView >
+        </SafeAreaView >
     )
 }
 

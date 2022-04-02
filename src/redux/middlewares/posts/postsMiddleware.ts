@@ -5,8 +5,6 @@ import { setRefreshing } from '../refreshing/refreshingMiddleware';
 import { store } from '../../../redux/store';
 export function getPosts() {
   return async function (dispatch: Dispatch<any>) {
-    console.log("getPosts");
-
     const posts = await ServiceInteractor.getPosts();
     dispatch(setRefreshing(true));
     dispatch(
