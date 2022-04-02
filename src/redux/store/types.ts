@@ -54,9 +54,11 @@ export interface AppState {
     posts: Post[];
     postDetail: PostDetail;
     refreshing: boolean;
+    loading: boolean;
 }
 
 export const initialState: AppState = {
+    loading: false,
     refreshing: false,
     posts: [],
     postDetail: {

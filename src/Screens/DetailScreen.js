@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { dpToPixel } from '../utils/CalculateSize';
 import { getImage } from '../utils/GetImage';
@@ -12,7 +12,7 @@ export default function DetailScreen({ navigation, route }) {
 
     const { isFavorite } = route.params;
 
-    const { postDetail } = useSelector(state => state);
+    const { postDetail, loading } = useSelector(state => state);
 
     const { postData, userData, comments, } = postDetail;
 
@@ -34,63 +34,69 @@ export default function DetailScreen({ navigation, route }) {
 
     return (
         <SafeAreaView>
-            <ScrollView>
-                <Image
-                    style={styles.image}
-                    source={{
-                        uri: getImage(postData)
-                    }}
-                />
-                <View style={styles.container}>
-                    <View style={styles.postContainer}>
-                        <Text style={styles.title}>Detalles de la publicacion</Text>
-                        <Text style={styles.subTitle}>{postData.title}</Text>
-                        <Text style={styles.description}>{postData.body}</Text>
-                    </View>
-                    <View style={styles.postContainer}>
-                        <Text style={styles.title}>Detalles del Autor</Text>
-                        <View>
+            {
+                !loading ? <ScrollView>
+                    <Image
+                        style={styles.image}
+                        source={{
+                            uri: getImage(postData)
+                        }}
+                    />
+                    <View style={styles.container}>
+                        <View style={styles.postContainer}>
+                            <Text style={styles.title}>Detalles de la publicacion</Text>
+                            <Text style={styles.subTitle}>{postData.title}</Text>
+                            <Text style={styles.description}>{postData.body}</Text>
+                        </View>
+                        <View style={styles.postContainer}>
+                            <Text style={styles.title}>Detalles del Autor</Text>
+                            <View>
+                                {
+                                    Object.keys(userData).map((key, index) => {
+                                        return (
+                                            <View key={key + index} style={styles.dataContainer}>
+                                                <Text numberOfLines={1} style={styles.subTitle}>{key}</Text>
+                                                <Text numberOfLines={1} style={styles.description} >{getUserData(key)}</Text>
+                                            </View>
+                                        )
+                                    })
+                                }
+                            </View>
+                        </View>
+                        <View style={styles.postContainer}>
+                            <Text style={styles.title}>Comentarios</Text>
                             {
-                                Object.keys(userData).map((key, index) => {
+                                comments.map((comment, index) => {
                                     return (
-                                        <View key={key + index} style={styles.dataContainer}>
-                                            <Text numberOfLines={1} style={styles.subTitle}>{key}</Text>
-                                            <Text numberOfLines={1} style={styles.description} >{getUserData(key)}</Text>
+                                        <View key={index} style={[styles.commentContainer, { borderBottomWidth: index >= comments.length - 1 ? 0 : 1 }]}>
+                                            <Text style={styles.subTitle}>{comment.name}</Text>
+                                            <Text style={styles.description}>{comment.body}</Text>
                                         </View>
                                     )
                                 })
                             }
                         </View>
-                    </View>
-                    <View style={styles.postContainer}>
-                        <Text style={styles.title}>Comentarios</Text>
-                        {
-                            comments.map((comment, index) => {
-                                return (
-                                    <View key={index} style={[styles.commentContainer, { borderBottomWidth: index >= comments.length - 1 ? 0 : 1 }]}>
-                                        <Text style={styles.subTitle}>{comment.name}</Text>
-                                        <Text style={styles.description}>{comment.body}</Text>
-                                    </View>
-                                )
-                            })
+                        {!isFavorite &&
+                            <TouchableOpacity
+                                style={[styles.postContainer, {
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-evenly',
+                                    alignItems: 'center',
+                                    backgroundColor: '#FA6666'
+                                }]}
+                                onPress={markAsFavorite}
+                            >
+                                < Text style={[styles.title, { marginBottom: 0, color: '#fff' }]}>Añadir a favoritos</Text>
+                                <Ionicons name="heart-outline" size={dpToPixel(20)} color="#fff" />
+                            </TouchableOpacity>
                         }
                     </View>
-                    {!isFavorite &&
-                        <TouchableOpacity
-                            style={[styles.postContainer, {
-                                flexDirection: 'row',
-                                justifyContent: 'space-evenly',
-                                alignItems: 'center',
-                                backgroundColor: '#FA6666'
-                            }]}
-                            onPress={markAsFavorite}
-                        >
-                            < Text style={[styles.title, { marginBottom: 0, color: '#fff' }]}>Añadir a favoritos</Text>
-                            <Ionicons name="heart-outline" size={dpToPixel(20)} color="#fff" />
-                        </TouchableOpacity>
-                    }
-                </View>
-            </ScrollView >
+                </ScrollView >
+                    :
+                    <View style={styles.loadingContainer}>
+                        <ActivityIndicator size="large" color="#FA6666" />
+                    </View>
+            }
         </SafeAreaView >
     )
 }
@@ -137,5 +143,10 @@ const styles = StyleSheet.create({
         width: '100%',
         borderBottomColor: '#ccc',
         marginBottom: dpToPixel(16),
-    }
+    },
+    loadingContainer: {
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
 })

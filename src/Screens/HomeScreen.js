@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Button, StyleSheet, Text, View } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useDispatch, useSelector } from 'react-redux';
 import ListPost from '../components/ListPost';
@@ -10,7 +10,7 @@ function HomeScreen() {
 
     const dispatch = useDispatch();
 
-    const { posts, refreshing } = useSelector(state => state);
+    const { posts, refreshing, loading } = useSelector(state => state);
 
     const onRefresh = React.useCallback(() => {
         dispatch(getPosts());
@@ -27,16 +27,21 @@ function HomeScreen() {
     return (
         <View>
             {
-                posts.length >= 1 && !refreshing ?
-                    <ListPost
-                        onRefresh={onRefresh}
-                        posts={getPostsOrderByFavorite()}
-                    />
+                !loading ?
+                    posts.length >= 1 && !refreshing ?
+                        <ListPost
+                            onRefresh={onRefresh}
+                            posts={getPostsOrderByFavorite()}
+                        />
+                        :
+                        <View style={styles.container}>
+                            <MaterialCommunityIcons name="update" size={dpToPixel(100)} color="#000" />
+                            <Text style={{ width: '70%', textAlign: 'center', margin: 8 }}>Mantente actualizado, puedes ver las ultimas publicaciones haciendo click aqui: </Text>
+                            <Button title='Cargar publicaciones' onPress={onRefresh} />
+                        </View>
                     :
                     <View style={styles.container}>
-                        <MaterialCommunityIcons name="update" size={dpToPixel(100)} color="#000" />
-                        <Text style={{ width: '70%', textAlign: 'center', margin: 8 }}>Mantente actualizado, puedes ver las ultimas publicaciones haciendo click aqui: </Text>
-                        <Button title='Cargar publicaciones' onPress={onRefresh} />
+                        <ActivityIndicator size="large" color="#FA6666" />
                     </View>
             }
         </View>
