@@ -11,7 +11,9 @@ import { PersistGate } from 'redux-persist/integration/react';
 import App from '../App';
 import { persistor, store } from '../src/redux/store';
 import DetailScreen from '../src/Screens/DetailScreen';
+import FavoritesScreen from '../src/Screens/FavoritesScreen';
 import HomeScreen from '../src/Screens/HomeScreen';
+import SplashScreen from '../src/Screens/SplashScreen';
 
 jest.mock('redux-persist', () => {
   const real = jest.requireActual('redux-persist');
@@ -56,4 +58,21 @@ it("renders Detail correctly ", () => {
     </DefaultProvider>
   );
 });
+
+it("renders Favorites correctly ", () => {
+  renderer.create(
+    <DefaultProvider>
+      <FavoritesScreen />
+    </DefaultProvider>
+  );
+});
+
+it("renders Splash correctly ", () => {
+  renderer.create(
+    <DefaultProvider>
+      <SplashScreen />
+    </DefaultProvider>
+  );
+});
+
 
