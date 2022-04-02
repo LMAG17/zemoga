@@ -4,6 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { textConstants } from '../constants/TextConstants';
 import FavoritesScreen from '../Screens/FavoritesScreen';
 import HomeScreen from '../Screens/HomeScreen';
 import { dpToPixel, heightByScreen } from '../utils/CalculateSize';
@@ -18,11 +19,11 @@ function CustomTabs({ navigation, state }) {
             <View style={styles.bottomTabsNavigatorContainer}>
                 <TouchableOpacity onPress={() => { navigation.navigate('Posts') }} style={styles.tabItem}>
                     <MaterialCommunityIcons name="post-outline" size={dpToPixel(24)} color={state.index == 0 ? "#FA6666" : "#000"} />
-                    <Text>Publicaciones</Text>
+                    <Text>{textConstants.bottomTabs.posts}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => { navigation.navigate('Favoritos') }} style={styles.tabItem}>
                     <FontAwesome5 name="star" size={dpToPixel(24)} color={state.index == 1 ? "#FA6666" : "#000"} />
-                    <Text>Favoritos</Text>
+                    <Text>{textConstants.bottomTabs.favorites}</Text>
                 </TouchableOpacity>
             </View>
         </View>

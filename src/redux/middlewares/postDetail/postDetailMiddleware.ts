@@ -1,5 +1,6 @@
 import { Dispatch } from 'react';
 import { Alert } from 'react-native';
+import { textConstants } from '../../../constants/TextConstants';
 import ServiceInteractor from '../../../services/ServiceInteractor';
 import { setPostDetailCreator } from '../../actions/postDetail/PostDetailActionsCreators';
 import { setLoading } from '../loading/loadingMiddleware';
@@ -15,7 +16,7 @@ export function getPostDetail(postId: Number, userId: Number, navigation: any, i
       dispatch(setPostDetailCreator(post));
       navigation.navigate('Detail', { isFavorite });
     } catch (error) {
-      Alert.alert('Error', 'Error al obtener los posts');
+      Alert.alert(textConstants.popUpError.title, textConstants.popUpError.message);
     }
     dispatch(setLoading(false));
   };

@@ -7,6 +7,8 @@ import BottomTabsNavigator from './BottomTabsNavigator';
 import { deleteAllPosts } from '../redux/middlewares/posts/postsMiddleware';
 import { useDispatch } from 'react-redux';
 import { Alert } from 'react-native';
+import { textConstants } from '../constants/TextConstants';
+
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
@@ -15,11 +17,11 @@ export default function AppNavigator() {
 
     const handleDeleteAllPosts = () => {
         Alert.alert(
-            '¿Estas seguro de eliminar todas las publicaciones?',
-            'Esta accion eliminara tambien las publicaciones marcadas como favoritas',
+            textConstants.alertDelete.title,
+            textConstants.alertDelete.message,
             [
-                { text: 'Cancelar', style: 'cancel' },
-                { text: 'Eliminar', onPress: () => dispatch(deleteAllPosts()) },
+                { text: textConstants.alertDelete.cancel, style: 'cancel' },
+                { text: textConstants.alertDelete.ok, onPress: () => dispatch(deleteAllPosts()) },
             ]);
     }
 
@@ -28,7 +30,8 @@ export default function AppNavigator() {
             <Stack.Navigator initialRouteName="Home">
                 <Stack.Screen name="Home" component={BottomTabsNavigator}
                     options={{
-                        title: "Publicaciones", headerRight: () => {
+                        title: textConstants.screenHeaders.posts,
+                        headerRight: () => {
                             return (
                                 <Octicons name="trash" size={24} color="black" onPress={handleDeleteAllPosts} />
                             )
@@ -36,7 +39,7 @@ export default function AppNavigator() {
                     }} />
                 <Stack.Screen name="Detail" component={DetailScreen}
                     options={{
-                        title: "Detalle",
+                        title: textConstants.screenHeaders.detail,
                     }} />
             </Stack.Navigator>
         </NavigationContainer>

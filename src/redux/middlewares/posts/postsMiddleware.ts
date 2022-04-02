@@ -5,6 +5,8 @@ import { setRefreshing } from '../refreshing/refreshingMiddleware';
 import { store } from '../../../redux/store';
 import { setLoading } from '../loading/loadingMiddleware';
 import { Alert } from 'react-native';
+import { textConstants } from '../../../constants/TextConstants';
+
 export function getPosts() {
   return async function (dispatch: Dispatch<any>) {
     dispatch(setLoading(true));
@@ -13,7 +15,7 @@ export function getPosts() {
       const posts = await ServiceInteractor.getPosts();
       dispatch(setPostsCreator(posts));
     } catch (error) {
-      Alert.alert('Error', 'Error al obtener los posts');
+      Alert.alert(textConstants.popUpError.title, textConstants.popUpError.message);
     }
     dispatch(setRefreshing(false));
     dispatch(setLoading(false));

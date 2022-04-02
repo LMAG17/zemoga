@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getPosts } from '../redux/middlewares/posts/postsMiddleware';
+import { textConstants } from '../constants/TextConstants';
 
 export default function SplashScreen({ setAppReady }) {
 
@@ -18,7 +19,7 @@ export default function SplashScreen({ setAppReady }) {
 
     return (
         <View style={styles.splashContainer}>
-            <Text>SplashScreen...</Text>
+            <Text>{textConstants.splashText}</Text>
         </View>
     )
 }

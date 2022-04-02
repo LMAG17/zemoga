@@ -5,6 +5,7 @@ import { dpToPixel } from '../utils/CalculateSize';
 import { getImage } from '../utils/GetImage';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { markAsFavorite as markAsFavoriteMiddleware } from '../redux/middlewares/posts/postsMiddleware';
+import { textConstants } from '../constants/TextConstants';
 
 export default function DetailScreen({ navigation, route }) {
 
@@ -44,12 +45,12 @@ export default function DetailScreen({ navigation, route }) {
                     />
                     <View style={styles.container}>
                         <View style={styles.postContainer}>
-                            <Text style={styles.title}>Detalles de la publicacion</Text>
+                            <Text style={styles.title}>{textConstants.detailScreen.postDetailTitleText}</Text>
                             <Text style={styles.subTitle}>{postData.title}</Text>
                             <Text style={styles.description}>{postData.body}</Text>
                         </View>
                         <View style={styles.postContainer}>
-                            <Text style={styles.title}>Detalles del Autor</Text>
+                            <Text style={styles.title}>{textConstants.detailScreen.userDetailTitleText}</Text>
                             <View>
                                 {
                                     Object.keys(userData).map((key, index) => {
@@ -64,7 +65,7 @@ export default function DetailScreen({ navigation, route }) {
                             </View>
                         </View>
                         <View style={styles.postContainer}>
-                            <Text style={styles.title}>Comentarios</Text>
+                            <Text style={styles.title}>{textConstants.detailScreen.commentsTitleText}</Text>
                             {
                                 comments.map((comment, index) => {
                                     return (
@@ -86,7 +87,7 @@ export default function DetailScreen({ navigation, route }) {
                                 }]}
                                 onPress={markAsFavorite}
                             >
-                                < Text style={[styles.title, { marginBottom: 0, color: '#fff' }]}>Añadir a favoritos</Text>
+                                < Text style={[styles.title, { marginBottom: 0, color: '#fff' }]}>{textConstants.detailScreen.addFavoriteButtonText}</Text>
                                 <Ionicons name="heart-outline" size={dpToPixel(20)} color="#fff" />
                             </TouchableOpacity>
                         }

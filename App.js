@@ -7,6 +7,7 @@ import SplashScreen from './src/Screens/SplashScreen';
 import { PersistGate } from "redux-persist/lib/integration/react"
 import NetInfo from "@react-native-community/netinfo";
 import { Text, View } from 'react-native';
+import { textConstants } from './src/constants/TextConstants';
 
 
 export default function App() {
@@ -24,7 +25,7 @@ export default function App() {
       <PersistGate loading={null} persistor={persistor}>
         {
           !isConnected &&
-          <Text style={{ backgroundColor: 'red', color: '#fff', textAlign: 'center' }}>Offline mode ON</Text>
+          <Text style={{ backgroundColor: 'red', color: '#fff', textAlign: 'center' }}>{textConstants.offlineMode}</Text>
         }
         <SafeAreaProvider>
           {appReady ? <AppNavigator /> : <SplashScreen setAppReady={setAppReady} />}

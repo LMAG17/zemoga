@@ -3,6 +3,7 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSelector } from 'react-redux';
 import ListPost from '../components/ListPost';
+import { textConstants } from '../constants/TextConstants';
 import { dpToPixel } from '../utils/CalculateSize';
 
 function FavoritesScreen({ navigation }) {
@@ -18,8 +19,8 @@ function FavoritesScreen({ navigation }) {
                 :
                 <View style={styles.container}>
                     <Ionicons name="heart-outline" size={dpToPixel(100)} color="#000" />
-                    <Text style={{ width: '70%', textAlign: 'center', margin: 8 }}>Aún no tienes publicaciones favoritas, puedes hacerlo dando click al icono del corazon cuando las veas</Text>
-                    <Button title='Quiero intentarlo' onPress={() => navigation.navigate('Posts')} />
+                    <Text style={{ width: '70%', textAlign: 'center', margin: 8 }}>{textConstants.favoriteScreen.noPostsText}</Text>
+                    <Button title={textConstants.favoriteScreen.noPostsButtonText} onPress={() => navigation.navigate('Posts')} />
                 </View>
             }
         </View>
