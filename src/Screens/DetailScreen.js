@@ -6,9 +6,11 @@ import { getImage } from '../utils/GetImage';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { markAsFavorite as markAsFavoriteMiddleware } from '../redux/middlewares/posts/postsMiddleware';
 
-export default function DetailScreen({ navigation }) {
+export default function DetailScreen({ navigation, route }) {
 
     const dispatch = useDispatch();
+
+    const { isFavorite } = route.params;
 
     const { postDetail } = useSelector(state => state);
 
@@ -73,18 +75,20 @@ export default function DetailScreen({ navigation }) {
                             })
                         }
                     </View>
-                    <TouchableOpacity
-                        style={[styles.postContainer, {
-                            flexDirection: 'row',
-                            justifyContent: 'space-evenly',
-                            alignItems: 'center',
-                            backgroundColor: '#FA6666'
-                        }]}
-                        onPress={markAsFavorite}
-                    >
-                        < Text style={[styles.title, { marginBottom: 0, color: '#fff' }]}>Añadir a favoritos</Text>
-                        <Ionicons name="heart-outline" size={dpToPixel(20)} color="#fff" />
-                    </TouchableOpacity>
+                    {!isFavorite &&
+                        <TouchableOpacity
+                            style={[styles.postContainer, {
+                                flexDirection: 'row',
+                                justifyContent: 'space-evenly',
+                                alignItems: 'center',
+                                backgroundColor: '#FA6666'
+                            }]}
+                            onPress={markAsFavorite}
+                        >
+                            < Text style={[styles.title, { marginBottom: 0, color: '#fff' }]}>Añadir a favoritos</Text>
+                            <Ionicons name="heart-outline" size={dpToPixel(20)} color="#fff" />
+                        </TouchableOpacity>
+                    }
                 </View>
             </ScrollView >
         </SafeAreaView >

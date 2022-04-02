@@ -36,7 +36,7 @@ function HomeScreen() {
                     <View style={styles.container}>
                         <MaterialCommunityIcons name="update" size={dpToPixel(100)} color="#000" />
                         <Text style={{ width: '70%', textAlign: 'center', margin: 8 }}>Mantente actualizado, puedes ver las ultimas publicaciones haciendo click aqui: </Text>
-                        <Button title='Cargar publicaciones' />
+                        <Button title='Cargar publicaciones' onPress={onRefresh} />
                     </View>
             }
         </View>
@@ -48,8 +48,7 @@ const styles = StyleSheet.create({
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-
-    },
+    }
 })
 
 export default HomeScreen;

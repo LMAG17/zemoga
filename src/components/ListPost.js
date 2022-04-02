@@ -46,7 +46,7 @@ export default function ListPost({ posts, onRefresh }) {
     const getPostById = async (item) => {
         const { id, userId } = item;
         dispatch(getPostDetail(id, userId));
-        navigation.navigate('Detail', { id: item.id, userId: item.userId })
+        navigation.navigate('Detail', { isFavorite: item.isFavorite });
     }
 
     return (
