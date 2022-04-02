@@ -1,6 +1,6 @@
 # Zemoga React Native test
 
-This Project is developed with react native
+This Project is developed with react native, you can see the screenshots inside __screenshots__ folder
 
 This application use the following libraries to work
 -  react
@@ -65,7 +65,7 @@ $ yarn ios
 
 # Zemoga React Native test
 
-Esta prueba esta realizada con react native.
+Esta prueba esta realizada con react native, puedes ver las capturas en la carpeta __screenshots__.
 
 Esta aplicacion utiliza las siguientes librerias para su funcionamiento principal:
 -  react
